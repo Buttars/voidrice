@@ -8,6 +8,9 @@
 # Adds `~/.local/bin` to $PATH
 export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
 
+# Adds '~/.yarn/bin' to $PATH
+export PATH="$PATH:${$(find ~/.yarn/bin -type d -printf %p:)%%:}"
+
 unsetopt PROMPT_SP
 
 # Default programs:
@@ -42,6 +45,8 @@ export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/history"
 export WEECHAT_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/weechat"
 export MBSYNCRC="${XDG_CONFIG_HOME:-$HOME/.config}/mbsync/config"
 export ELECTRUMDIR="${XDG_DATA_HOME:-$HOME/.local/share}/electrum"
+
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ])"
 
 # Other program settings:
 export DICS="/usr/share/stardict/dic/"
@@ -148,7 +153,7 @@ if pacman -Qs libxft-bgra >/dev/null 2>&1; then
 else
 	echo "\033[31mIMPORTANT\033[0m: Note that \033[32m\`libxft-bgra\`\033[0m must be installed for this build of dwm.
 Please run:
-	\033[32mparu -S libxft-bgra-git\033[0m
+	\033[32myay -S libxft-bgra-git\033[0m
 and replace \`libxft\`. Afterwards, you may start the graphical server by running \`startx\`."
 fi
 
