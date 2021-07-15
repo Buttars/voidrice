@@ -82,7 +82,11 @@ function! IsCurrentBufferNerdTree()
   return bufwinnr("%") == bufwinnr(t:NERDTreeBufName)
 endfunction
 
-cnoreabbrev <expr> q IsNerdTreeEnabled() && !IsCurrentBufferNerdTree() ? 'Bclose' : 'q'
+function IsCurrentBufferEmpty()
+  return line('$') == 1 && getline(1) == ''
+endfunction
+
+cnoreabbrev <expr> q IsNerdTreeEnabled() && !IsCurrentBufferNerdTree() && !IsCurrentBufferEmpty() ? 'Bclose' : 'q'
 cnoreabbrev <expr> qq 'q'
 
 
