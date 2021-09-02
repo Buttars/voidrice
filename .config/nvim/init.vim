@@ -38,6 +38,7 @@ set noshowmode
 set noruler
 set laststatus=0
 set noshowcmd
+set nowrap
 set shiftwidth=2
 set softtabstop=2
 set noexpandtab
@@ -86,7 +87,11 @@ function IsCurrentBufferEmpty()
   return line('$') == 1 && getline(1) == ''
 endfunction
 
-cnoreabbrev <expr> q IsNerdTreeEnabled() && !IsCurrentBufferNerdTree() && !IsCurrentBufferEmpty() ? 'Bclose' : 'q'
+function CheckNerdTree()
+  return IsNerdTreeEnabled() && !IsCurrentBufferNerdTree() && !IsCurrentBufferEmpty()
+endfunction
+
+cnoreabbrev <expr> q CheckNerdTree() ? 'Bclose' : 'q'
 cnoreabbrev <expr> qq 'q'
 
 
@@ -220,6 +225,11 @@ nnoremap + <C-W>+
 
 " Autocomplete when hitting tab
 inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<C-g>u\<TAB>"
+
+" Unmap tab while in insert mode in VimWiki
+au filetype vimwiki silent! iunmap <buffer> <Tab>
+
+inoremap <silent><expr> <c-space> coc#refresh()
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
